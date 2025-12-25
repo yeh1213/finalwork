@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="book/books.png">
+    <title>角落書店</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+            font-family: "Noto Sans TC", "Segoe UI", Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(180deg, #f3efe8, #ffffff);
+            color: #333;
+        }
+
+        header {
+            background: #5d4037;
+            color: #fff;
+            padding: 20px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        header h2 {
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .cart {
+            background: #fff;
+            color: #5d4037;
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        main {
+            padding: 32px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 28px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 18px 16px 20px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+        }
+
+        .card img {
+            width: 120px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            margin: 8px 0 4px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .card .author {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 6px;
+        }
+
+        .card p {
+            margin: 6px 0 10px;
+            font-weight: bold;
+            color: #5d4037;
+        }
+
+        button {
+            background: #6d4c41;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #4e342e;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* Checkout modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .modal-content {
+            background: #fff;
+            width: 92%;
+            max-width: 420px;
+            padding: 22px 24px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            color: #5d4037;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-top: 14px;
+            font-weight: 600;
+        }
+
+        .modal-content input,
+        .modal-content select {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h2><img src="book/books.png" width="30px"> 角落書店</h2>
+        <div class="cart" onclick="openCheckout()">🛒 購物車：<span id="cartCount">0</span> 本｜NT$ <span
+                id="totalPrice">0</span></div>
+    </header>
+
+    <main>
+        <div class="products">
+
+            <div class="card">
+                <img src="book/book2.png">
+                <h3>原子習慣</h3>
+                <div class="author">James Clear</div>
+                <p>NT$ 380</p>
+                <button onclick="addToCart(380)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/P0573309270194_3_83539356.jpeg" alt="">
+                <h3>被討厭的勇氣</h3>
+                <div class="author">岸見一郎、古賀史健</div>
+                <p>NT$ 360</p>
+                <button onclick="addToCart(360)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/p0082263488299-item-7e2cxf4x0896x0896-m.jpg.cf.jpg" alt="">
+                <h3>解憂雜貨店</h3>
+                <div class="author">東野圭吾</div>
+                <p>NT$ 320</p>
+                <button onclick="addToCart(320)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/18939035.jpg">
+                <h3>小王子</h3>
+                <div class="author">Antoine de Saint-Exupéry</div>
+                <p>NT$ 250</p>
+                <button onclick="addToCart(250)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/6d3bafaa577fb2c05f40de7f94044fef_0_1_300_300.jpg">
+                <h3>刻意練習</h3>
+                <div class="author">Anders Ericsson</div>
+                <p>NT$ 420</p>
+                <button onclick="addToCart(420)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/圖1.jpg" alt="">
+                <h3>人類大歷史</h3>
+                <div class="author">尤瓦爾・赫拉利</div>
+                <p>NT$ 480</p>
+                <button onclick="addToCart(480)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/20200716054905586381.jpg">
+                <h3>嫌疑犯 X 的獻身</h3>
+                <div class="author">東野圭吾</div>
+                <p>NT$ 300</p>
+                <button onclick="addToCart(300)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/f181fb264fd127500b1dc47465104c97.jpg">
+                <h3>窮查理的普通常識</h3>
+                <div class="author">Charles T. Munger</div>
+                <p>NT$ 520</p>
+                <button onclick="addToCart(520)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/images.jpg">
+                <h3>情緒勒索</h3>
+                <div class="author">Susan Forward</div>
+                <p>NT$ 340</p>
+                <button onclick="addToCart(340)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/showLargeImage.jpg">
+                <h3>活著</h3>
+                <div class="author">余華</div>
+                <p>NT$ 280</p>
+                <button onclick="addToCart(280)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/9781338878929_1.jpg">
+                <h3>哈利波特：神秘的魔法石</h3>
+                <div class="author">J. K. Rowling</div>
+                <p>NT$ 399</p>
+                <button onclick="addToCart(399)">加入購物車</button>
+            </div>
+
+            <div class="card">
+                <img src="book/pic_1707999071_42935_1.jpg">
+                <h3>追風箏的孩子</h3>
+                <div class="author">Khaled Hosseini</div>
+                <p>NT$ 360</p>
+                <button onclick="addToCart(360)">加入購物車</button>
+            </div>
+            <div class="card">
+                <img src="book/boo3.png">
+                <h3>金瓶梅</h3>
+                <div class="author">蘭陵笑笑生</div>
+                <p>NT$ 400</p>
+                <button onclick="addToCart(360)">加入購物車</button>
+            </div>
+            <div class="card">
+                <img src="book/book4.png">
+                <h3>三國演義</h3>
+                <div class="author">羅貫中</div>
+                <p>NT$ 350</p>
+                <button onclick="addToCart(360)">加入購物車</button>
+            </div>
+            <div class="card">
+                <img src="book/638901612053930000.jpg">
+                <h3>我推的孩子(15+16)END</h3>
+                <div class="author">原作：赤坂アカ／漫畫：横槍メンゴ</div>
+                <p>NT$ 630</p>
+                <button onclick="addToCart(360)">加入購物車</button>
+            </div>
+            <div class="card">
+                <img src="book/ec198858.jpg">
+                <h3>BLEACH 死神 12</h3>
+                <div class="author">久保帶人</div>
+                <p>NT$ 85</p>
+                <button onclick="addToCart(360)">加入購物車</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        ©2025 角落書店
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <h3>🧾 結帳資訊</h3>
+
+            <label>取書姓名</label>
+            <input type="text" id="customerName" placeholder="請輸入姓名" />
+
+            <label>付款方式</label>
+            <select id="payment">
+                <option>信用卡</option>
+                <option>行動支付</option>
+                <option>貨到付款</option>
+            </select>
+
+            <label>電子發票載具</label>
+            <select id="invoice">
+                <option>手機條碼</option>
+                <option>會員載具</option>
+                <option>不使用載具</option>
+            </select>
+
+            <p style="margin-top:14px;">總金額：<strong>NT$ <span id="checkoutTotal">0</span></strong></p>
+
+            <div class="modal-actions">
+                <button onclick="closeCheckout()">取消</button>
+                <button onclick="submitOrder()">確認結帳</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let count = 0;
+        let total = 0;
+
+        function addToCart(price) {
+            count++;
+            total += price;
+            document.getElementById('cartCount').innerText = count;
+            document.getElementById('totalPrice').innerText = total;
+        }
+
+        function openCheckout() {
+            if (count === 0) {
+                alert('購物車是空的');
+                return;
+            }
+            document.getElementById('checkoutTotal').innerText = total;
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        function submitOrder() {
+            const name = document.getElementById('customerName').value;
+            if (!name) {
+                alert('請輸入取書姓名');
+                return;
+            }
+            alert('訂單完成！\n取書人：' + name + '\n金額：NT$ ' + total);
+            count = 0;
+            total = 0;
+            document.getElementById('cartCount').innerText = 0;
+            document.getElementById('totalPrice').innerText = 0;
+            closeCheckout();
+        }
+    </script>
+
+</body>
+
+</html>
